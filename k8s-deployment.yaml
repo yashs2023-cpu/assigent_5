@@ -15,8 +15,9 @@ spec:
       containers:
       - name: html-demo
         image: 23mis0625/html-demo:latest
+        imagePullPolicy: Always  # Crucial to pull the new image every time
         ports:
-        - containerPort: 80
+        - containerPort: 80      # Standard port for HTML/Nginx
 ---
 apiVersion: v1
 kind: Service
@@ -27,6 +28,6 @@ spec:
   selector:
     app: html-demo
   ports:
-  - port: 80
-    targetPort: 80
-    nodePort: 30010
+    - port: 80            # The port the service exposes inside the cluster
+      targetPort: 80      # MUST match the containerPort above
+      nodePort: 30014     # The port you visit in your browser (e.g., localhost:30014)
